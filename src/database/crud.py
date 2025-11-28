@@ -1,8 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
-from database.models import ShortURL
-from exceptions import SlugAlreadyExistsError
+from src.database.models import ShortURL
+from src.exceptions import SlugAlreadyExistsError
 
 
 async def add_slug_to_db(

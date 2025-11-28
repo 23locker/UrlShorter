@@ -4,13 +4,12 @@ from typing import Annotated, AsyncGenerator
 from fastapi import Body, Depends, FastAPI, HTTPException, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlette.types import HTTPExceptionHandler
 
-from database.crud import get_url_by_slug
-from database.db import engine, new_session
-from database.models import Base
-from exceptions import NoUserUrlFoundError, SlugAlreadyExistsError
-from service import generate_short_url
+from src.database.crud import get_url_by_slug
+from src.database.db import engine, new_session
+from src.database.models import Base
+from src.exceptions import NoUserUrlFoundError, SlugAlreadyExistsError
+from src.service import generate_short_url
 
 
 @asynccontextmanager

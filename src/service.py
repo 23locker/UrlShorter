@@ -2,9 +2,9 @@ import re
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.crud import add_slug_to_db, get_url_by_slug
-from exceptions import NotValidUserUrl, NoUserUrlFoundError, SlugAlreadyExistsError
-from shortener import generate_random_slug
+from src.database.crud import add_slug_to_db, get_url_by_slug
+from src.exceptions import NotValidUserUrl, NoUserUrlFoundError, SlugAlreadyExistsError
+from src.shortener import generate_random_slug
 
 pattern = r"^https:\/\/([A-Za-z0-9-]+\.)+[A-Za-z]{2,}([\/?#][^\s]*)?$"
 
