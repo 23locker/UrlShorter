@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Тестирование URL Shortener</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                max-width: 600px;
+                margin: 40px auto;
+                padding: 20px;
+                background: #f6f6f6;
+                border-radius: 12px;
+            }
+            input,
+            button {
+                padding: 10px;
+                font-size: 16px;
+            }
+            input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            button {
+                cursor: pointer;
+            }
+            .result {
+                margin-top: 20px;
+                padding: 15px;
+                background: white;
+                border-radius: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Проверка ручек URL Shortener</h2>
+
+        <form id="short-form">
+            <input
+                id="url-input"
+                type="text"
+                placeholder="Введи длинный URL"
+                required
+            />
+            <button type="submit">Сократить</button>
+        </form>
+
+        <div id="result" class="result" style="display: none"></div>
+
+        <script>
+            const form = document.getElementById("short-form");
+            const input = document.getElementById("url-input");
+            const resultBlock = document.getElementById("result");
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const userUrl = input.value.trim();
+
+                const response = await fetch(
+                    "http://localhost:8000/short_url",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ user_url: userUrl }),
+                    },
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    resultBlock.style.display = "block";
+                    resultBlock.innerHTML = `<b>Ошибка:</b> ${data.detail}`;
+                    return;
+                }
+
+                const slug = data.data;
+                const shortUrl = `http://localhost:8000/${slug}`;
+
+                resultBlock.style.display = "block";
+                resultBlock.innerHTML = `
+            <p><b>Slug:</b> ${slug}</p>
+            <p><b>Короткая ссылка:</b> <a href="${shortUrl}" target="_blank">${shortUrl}</a></p>
+        `;
+            });
+        </script>
+    </body>
+</html>
