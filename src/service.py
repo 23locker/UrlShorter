@@ -34,7 +34,7 @@ async def generate_short_url(
 async def get_user_url_by_slug(
     slug: str,
 ) -> str:
-    user_url = await get_url_by_slug(slug)
+    user_url = await get_url_by_slug(slug, session)
     if not user_url:
         raise NoUserUrlFoundError()
     return user_url

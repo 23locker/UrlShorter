@@ -28,4 +28,4 @@ async def get_url_by_slug(
     query = select(ShortURL).filter_by(slug=slug)
     result = await session.execute(query)
     res: ShortURL | None = result.scalar_one_or_none()
-    return res.user_url if res.user_url else None
+    return res.user_url if res else None
