@@ -2,6 +2,7 @@ venv
 .venv
 .python-version
 __pycache__
+.pytest_cache
 
 # Backend
 backend/.env

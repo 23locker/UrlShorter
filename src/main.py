@@ -3,7 +3,7 @@ from typing import Annotated, AsyncGenerator
 
 from fastapi import Body, Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.crud import get_url_by_slug
@@ -32,6 +32,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+async def serve_index():
+    return FileResponse("index.html")
 
 
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
